@@ -1,0 +1,11 @@
+{		
+	"name":	"NewsLetter ReactJS App",		
+	"version":	"1.0.0",		
+	"description":	"NewsLetter on ReactJS",		
+	"main":	"index.html",		
+	"scripts":	{				
+		"start":	"node	server.js"		
+	},		
+	"author":	"Mit9l",		
+	"license":	"MIT" 
+}
