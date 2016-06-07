@@ -38,8 +38,10 @@ var newsList = [
 		bigText: '2134 w qy 3y 35q4e5h 4q5 q4 4 uj46j4q6jq46 jq46j q46jq4jhqqehqeh erh'
 	},
 ];
-
-
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 var Article = React.createClass ({
 
 	propTypes:	{				
@@ -85,7 +87,10 @@ var Article = React.createClass ({
 		)
 	}
 })
-
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 var News = React.createClass({
 	propTypes: {
 		data: React.PropTypes.array.isRequired
@@ -118,39 +123,108 @@ var News = React.createClass({
 	}
 
 });
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+var	Add	=	React.createClass({
 
-
-var	TestInput	=	React.createClass({
-	
 	getInitialState: function() {
 		return {
-			myValue: ''
+			agreeNotChecked: true,
+			authorIsEmpty: true,
+			textIsEmpty: true,
+			// btnIsDisabled: true
 		}
 	},
 
-	onChangeHandler:function(e)	{				
-		this.setState({myValue:	e.target.value}) 
+	onCheckRuleClick: function(e) {
+		this.setState({agreeNotChecked: !this.state.agreeNotChecked})
 	},
 
-	render:	function()	{				
+	onAuthorChange: function(e) {
+		if(e.target.value.trim().length > 0) {
+			this.setState({authorIsEmpty: false})
+		} else {
+			this.setState({authorIsEmpty: true})
+		}
+	},
+
+	onTextChange: function(e) {
+		if (e.target.value.trim().length > 0) {
+			this.setState({textIsEmpty: false})
+		} else {
+			this.setState({textIsEmpty: true})
+		}
+	},
+
+	onBtnClickHandler:	function(e)	{
+		e.preventDefault();	
+		var author = ReactDOM.findDOMNode(this.refs.author).value;
+		var text = ReactDOM.findDOMNode(this.refs.text).value;
+		alert(''+author+'\n'+text);
+	},
+
+	componentDidMount: function() {
+		ReactDOM.findDOMNode(this.refs.author).focus();
+	},
+
+	render:	function()	{
+		var	agreeNotChecked	=	this.state.agreeNotChecked,								
+			authorIsEmpty	=	this.state.authorIsEmpty,								
+			textIsEmpty	=	this.state.textIsEmpty;	
+
 		return	(						
-			<input className='test-input' value='{this.state.myValue}' onChange='{this.onChangeHandler}' placeholder='введите значние'	/>			
+			<form className='add	cf'>
+				<input
+					type='text'	
+					className='add__author'										
+					defaultValue=''		
+					placeholder='Ваше	имя'										
+					ref='author'
+					onChange={this.onAuthorChange}							
+				/>								
+				<textarea										
+					className='add__text'										
+					defaultValue=''										
+					placeholder='Текст	новости'										
+					ref='text'
+					onChange={this.onTextChange}								
+				></textarea>								
+				<label	className='add__checkrule'>										
+					<input	type='checkbox'	ref='checkrule'	onChange={this.onCheckRuleClick} />Я	согласен с правилами								
+				</label>								
+				<button										
+					className='add__btn'										
+					onClick={this.onBtnClickHandler}										
+					ref='alert_button'
+					disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
+					>										
+					Добавить новость								
+				</button>						
+			</form>			
 		);		
 	} 
-});
-
+})
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 var App = React.createClass({
 	render: function() {
 		return (
 			<div className="app">
+				<Add />
 				<h1 className="news__title">новости</h1>
-				<TestInput />
 				<News data={newsList} /> {/*добавили свойство*/}
 			</div>
 		);
 	}
 });
-
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 ReactDOM.render(		
 	<App />,
 	document.getElementById('root')
