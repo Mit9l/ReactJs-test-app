@@ -58,13 +58,15 @@ var Article = React.createClass ({
 
 	getInitialState: function()	{				
 		return	{						
-			visible: false				
+			visible: false,
+			readMoreText: true,
 		};		
 	},
 
 	readmoreClick: function(e) {
 		e.preventDefault();
 		this.setState({visible: !this.state.visible});
+		this.setState({readMoreText: !this.state.readMoreText})
 	},
 
 
@@ -76,6 +78,7 @@ var Article = React.createClass ({
 		var text = this.props.data.text;
 		var fullText = this.props.data.fullText;
 		var visible = this.state.visible;
+		var readMoreText = this.state.readMoreText;
 
 		return(
 			<div className="article">
@@ -84,8 +87,8 @@ var Article = React.createClass ({
 				<a href="#" 
 					onClick={this.readmoreClick} 
 					// className={'article__readmore '+ (visible ? 'none':'')}>
-					className={'article__readmore'}>
-					подробнее
+					className={'article__readmore' + (visible ? ' show': '')}>
+					{readMoreText ? 'подробнее': 'свернуть'}
 				</a>
 				<div className={'article__big-text '+ (visible ? '': 'none')}>{fullText}</div>
 			</div>
